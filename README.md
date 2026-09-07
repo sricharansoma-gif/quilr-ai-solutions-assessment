@@ -94,10 +94,11 @@ Key decisions:
 - Atomic `BEGIN IMMEDIATE` reservations prevent concurrent requests from bypassing capacity checks.
 - Tenant API keys are SHA-256 hashed before persistence.
 - Primary provider fallback occurs on HTTP 429 or a 3-second timeout.
+- Timed-out primary requests are cancelled with `AbortController` before fallback completes.
 - Late primary completion cannot overwrite a fallback result.
 - Public gateway errors are standardized and sanitized.
 
-For a horizontally scaled production deployment, rate-limit state would move to a centralized system such as Redis, token usage would be calculated server-side rather than trusted from clients, and timed-out upstream calls would be actively cancelled.
+For a horizontally scaled production deployment, rate-limit state would move to a centralized system such as Redis, and token usage would be calculated server-side rather than trusted from clients.
 
 ## Running the Projects
 
